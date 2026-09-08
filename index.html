@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#161616">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>Feishin Remote</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <div class="ambient" id="ambient"></div>
+    <div class="grain"></div>
+
+    <header class="topbar">
+      <button class="icon-btn" id="settings-btn" aria-label="Configuración" title="Configuración">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        <span class="sr-only">Configuración</span>
+      </button>
+    </header>
+
+    <main class="remote">
+      <section class="art-stage" id="art-stage" aria-label="Portada del álbum">
+        <div class="album-shadow"></div>
+        <div class="album-art-shell">
+          <img id="album-art" alt="Portada" draggable="false">
+          <div id="album-placeholder" class="album-placeholder" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="3.5"/><circle cx="16.5" cy="16" r="3.5"/></svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="metadata">
+        <div class="title-line">
+          <div class="track-info">
+            <h1 id="track-name">Nada reproduciéndose</h1>
+            <p id="artist-name">Conecta Feishin Remote</p>
+            <p class="secondary-meta"><span id="album-name">—</span><span class="dot-separator">•</span><span id="release-year">—</span></p>
+          </div>
+          <button class="heart-btn" id="favorite-btn" aria-label="Agregar a favoritos" title="Favorito">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 8.7c0 5.4-8.8 10.2-8.8 10.2S3.2 14.1 3.2 8.7A4.7 4.7 0 0 1 12 6.5a4.7 4.7 0 0 1 8.8 2.2Z"/></svg>
+          </button>
+        </div>
+
+        <div class="timeline">
+          <input id="progress" class="range" type="range" min="0" max="1000" step="1" value="0" aria-label="Posición de reproducción">
+          <div class="time-row"><span id="current-time">0:00</span><span id="total-time">0:00</span></div>
+        </div>
+
+        <div class="controls" aria-label="Controles de reproducción">
+          <button class="control-btn mode" id="shuffle-btn" title="Aleatorio" aria-label="Aleatorio">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 3 21 3 21 8"></polyline>
+              <line x1="4" y1="20" x2="21" y2="3"></line>
+              <polyline points="21 16 21 21 16 21"></polyline>
+              <line x1="15" y1="15" x2="21" y2="21"></line>
+              <line x1="4" y1="4" x2="9" y2="9"></line>
+            </svg>
+          </button>
+          <button class="control-btn transport" id="prev-btn" title="Anterior" aria-label="Anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14"/><path d="m18 5-8 7 8 7Z"/></svg>
+          </button>
+          <button class="play-btn" id="play-btn" title="Reproducir / pausar" aria-label="Reproducir / pausar">
+            <svg id="play-svg" class="play-shape" viewBox="0 0 24 24" aria-hidden="true"><path id="play-path" d="m9 6 10 6-10 6Z"/></svg>
+          </button>
+          <button class="control-btn transport" id="next-btn" title="Siguiente" aria-label="Siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14"/><path d="m6 5 8 7-8 7Z"/></svg>
+          </button>
+          <button class="control-btn mode" id="repeat-btn" title="Bucle" aria-label="Bucle">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="17 1 21 5 17 9"></polyline>
+              <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
+              <polyline points="7 23 3 19 7 15"></polyline>
+              <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
+            </svg>
+            <small id="repeat-badge"></small>
+          </button>
+        </div>
+
+        <div class="bottom-controls">
+          <div class="volume-control">
+            <span id="volume-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="11 5 6 9 2 9 2 14 6 14 11 19 11 5"></polygon>
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              </svg>
+            </span>
+            <input id="volume" class="range" type="range" min="0" max="100" step="1" value="70" aria-label="Volumen">
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="settings-backdrop" class="backdrop hidden"></div>
+    <section id="settings-panel" class="settings-panel hidden" aria-label="Configuración de Feishin Remote">
+      <div class="settings-grab"></div>
+      <div class="settings-heading">
+        <div>
+          <span class="overline">FEISHIN REMOTE</span>
+          <h2>Conexión</h2>
+        </div>
+        <button class="icon-btn close-btn" id="close-settings" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <form id="settings-form">
+        <label class="field">
+          <span>Dirección</span>
+          <input id="host-input" autocomplete="url" inputmode="url" placeholder="ws://192.168.1.20:4333" required>
+        </label>
+        <div class="two-fields">
+          <label class="field">
+            <span>Usuario</span>
+            <input id="username-input" autocomplete="username" placeholder="Opcional">
+          </label>
+          <label class="field">
+            <span>Contraseña</span>
+            <input id="password-input" type="password" autocomplete="current-password" placeholder="Opcional">
+          </label>
+        </div>
+        <label class="switch-row">
+          <input id="remember-password" type="checkbox">
+          <span class="switch"></span>
+          <span>Recordar contraseña</span>
+        </label>
+        <p class="settings-note">El audio sigue reproduciéndose en Feishin. Este teléfono solo envía controles y recibe el estado actual.</p>
+        <button class="save-btn" type="submit">Conectar</button>
+        <button class="demo-btn" type="button" id="demo-btn">Ver demo</button>
+      </form>
+    </section>
+
+    <div id="toast-root" aria-live="polite"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
